@@ -1,5 +1,5 @@
 import { useState } from "react";
-import iconeChat from "../assets/iconechat.png";
+import iconechat from "../assets/iconechat.png";
 
 const ChatBot = () => {
   const [isVisible, setIsVisible] = useState(false); // controla a montagem do chat
@@ -85,7 +85,7 @@ const ChatBot = () => {
       {/* Ícone de ativar o chat */}
       {!isVisible && (
         <img
-          src={iconeChat}
+          src={iconechat}
           alt="Ícone do Chat"
           className="w-[100px] h-[100px] cursor-pointer"
           onClick={openChat}
@@ -101,7 +101,7 @@ const ChatBot = () => {
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-[#FF7700] to-white text-white flex items-center p-3 gap-2">
-            <img src={iconeChat} alt="Ícone" className="w-10 h-10" />
+            <img src={iconechat} alt="Ícone" className="w-10 h-10" />
             <span className="font-bold">BrAIn-</span>
             <span className="text-sm">Chat Bot</span>
             <button
