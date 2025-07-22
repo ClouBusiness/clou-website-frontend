@@ -1,5 +1,5 @@
 import { useState } from "react";
-import iconeChat from "../assets/iconeChat.png";
+import iconeChat from "../assets/iconechat.png";
 
 const ChatBot = () => {
   const [isVisible, setIsVisible] = useState(false); // controla a montagem do chat
