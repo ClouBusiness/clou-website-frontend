@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import iconeChat from "../assets/iconeChat.png";
 
 const ChatBot = () => {
