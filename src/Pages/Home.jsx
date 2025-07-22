@@ -21,6 +21,7 @@ import lateral from "../assets/Vector6.png";
 import vetor9 from "../assets/vetor9.png";
 import Cards from "../Components/Cards";
 import Carousel from "../Components/Carousel";
+import ChatBot from "../Components/ChatBot";
 const Home = () => {
   const redesArr = [
     {
@@ -98,7 +99,7 @@ const Home = () => {
             alt="Banner"
             className="w-2/3 h-screen relative mb-20"
           />
-          <div className="absolute top-[10%]">
+          <div className="absolute top-[8%]">
             <h2
               className="leading-[100%] text-white font-bold text-[42px]
             w-1/2 px-16"
@@ -524,6 +525,9 @@ const Home = () => {
       </div>
       <div className="absolute right-120 bottom-5">
         <Carousel />
+      </div>
+      <div>
+        <ChatBot/>
       </div>
     </>
   );

@@ -1,8 +1,10 @@
 import { useState } from "react";
+
 import iconeChat from "../assets/iconeChat.png";
 
-const Teste = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const ChatBot = () => {
+  const [isVisible, setIsVisible] = useState(false); // controla a montagem do chat
+  const [isOpen, setIsOpen] = useState(false); // controla animação
   const [step, setStep] = useState("welcome");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -12,12 +14,22 @@ const Teste = () => {
     },
   ]);
 
+  // Função para abrir com animação suave
+  const openChat = () => {
+    setIsVisible(true);
+    setTimeout(() => setIsOpen(true), 10); // atraso para iniciar transição
+  };
+
+  // Função para fechar suavemente
+  const closeChat = () => {
+    setIsOpen(false);
+    setTimeout(() => setIsVisible(false), 300); // espera a animação antes de desmontar
+  };
+
   const handleSend = () => {
     if (!input.trim()) return;
-
     const userMessage = { from: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
-
     processInput(input.trim());
     setInput("");
   };
@@ -71,25 +83,31 @@ const Teste = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {!isOpen && (
+      {/* Ícone de ativar o chat */}
+      {!isVisible && (
         <img
           src={iconeChat}
           alt="Ícone do Chat"
-          className="w-[50px] h-[50px] cursor-pointer"
-          onClick={() => setIsOpen(true)}
+          className="w-[100px] h-[100px] cursor-pointer"
+          onClick={openChat}
         />
       )}
 
-      {isOpen && (
-        <div className="w-[350px] bg-white rounded-[20px] shadow-lg border border-gray-200 overflow-hidden">
+      {/* Chatbox com transição suave */}
+      {isVisible && (
+        <div
+          className={`w-[350px] bg-white rounded-[20px] shadow-lg border border-gray-200 overflow-hidden
+          transform transition-all duration-300 ease-in-out
+          ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+        >
           {/* Header */}
-          <div className="bg-[#FF914D] text-white flex items-center p-3 gap-2">
-            <img src={iconeChat} alt="Ícone" className="w-6 h-6" />
-            <span className="font-bold">BrAIn -</span>
+          <div className="bg-gradient-to-r from-[#FF7700] to-white text-white flex items-center p-3 gap-2">
+            <img src={iconeChat} alt="Ícone" className="w-10 h-10" />
+            <span className="font-bold">BrAIn-</span>
             <span className="text-sm">Chat Bot</span>
             <button
-              className="ml-auto text-white font-bold"
-              onClick={() => setIsOpen(false)}
+              className="ml-auto text-black font-bold"
+              onClick={closeChat}
             >
               X
             </button>
@@ -134,4 +152,4 @@ const Teste = () => {
   );
 };
 
-export default Teste;
+export default ChatBot;
