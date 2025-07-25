@@ -13,6 +13,8 @@ const ChatBot = () => {
         "Olá, seja bem-vindo(a) à Clou Business, sua parceira estratégica em marketing digital!\n\nComo podemos ajudar você hoje?\n\n1️⃣ Quero melhorar o marketing da minha empresa\n2️⃣ Desejo saber mais sobre a inteligência artificial\n3️⃣ Preciso de um site profissional\n4️⃣ Falar com um especialista\n5️⃣ Agendar uma consultoria gratuita",
     },
   ]);
+  const [formStep, setFormStep] = useState(0);
+  const [formData, setFormData] = useState({});
 
   const openChat = () => {
     setIsVisible(true);
@@ -35,7 +37,34 @@ const ChatBot = () => {
   const processInput = (input) => {
     const contains = (keywords) => keywords.some((kw) => input.includes(kw));
 
-    // Palavras-chave universais
+    if (step === "orcamentoMarketing") {
+      const perguntas = [
+        "1. Qual o ramo da sua empresa?",
+        "2. Você tem redes sociais ativas? (Sim / Não)",
+        "3. Qual é o seu principal objetivo com o marketing?",
+        "4. Você busca mais clientes, mais visibilidade ou melhorar a imagem da marca?",
+      ];
+
+      const respostas = ["ramo", "redes", "objetivo", "meta"];
+      const chave = respostas[formStep];
+      setFormData((prev) => ({ ...prev, [chave]: input }));
+
+      if (formStep < perguntas.length - 1) {
+        setTimeout(() => {
+          sendBotMessage(perguntas[formStep + 1]);
+          setFormStep(formStep + 1);
+        }, 300);
+      } else {
+        sendBotMessage(
+          "Obrigado! Em instantes, um dos nossos especialistas entrará em contato com uma proposta personalizada."
+        );
+        setStep("finalizado");
+        setFormStep(0);
+        setFormData({});
+      }
+      return;
+    }
+
     if (contains(["preço", "valores", "planos"])) {
       sendBotMessage(
         "Nossos serviços são personalizados, mas temos planos a partir de:\n• Gestão de redes: 150.000 Kz/mês\n• Sites: 550.000 Kz\n• BrAIn IA: desde 1.200.000 Kz (licença + setup)\n\nDeseja receber um orçamento?"
@@ -49,9 +78,7 @@ const ChatBot = () => {
     }
 
     if (contains(["humano", "atendimento", "consultor"])) {
-      sendBotMessage(
-        "👤 Sem problemas! Estamos te transferindo para um atendente humano."
-      );
+      sendBotMessage("👤 Sem problemas! Estamos te transferindo para um atendente humano.");
       return;
     }
 
@@ -90,7 +117,9 @@ const ChatBot = () => {
         if (input === "1") {
           sendBotMessage("✅ Encaminhando você para um consultor especializado...");
         } else if (input === "2") {
-          sendBotMessage("Vamos iniciar um orçamento!\nQual o ramo da sua empresa?\nTem redes sociais ativas?\nQual seu objetivo com o marketing?");
+          sendBotMessage("Vamos iniciar um orçamento!");
+          setTimeout(() => sendBotMessage("1. Qual o ramo da sua empresa?"), 300);
+          setStep("orcamentoMarketing");
         } else {
           fallback();
         }
