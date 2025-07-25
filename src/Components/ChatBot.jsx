@@ -2,67 +2,125 @@ import { useState } from "react";
 import iconechat from "../assets/iconechat.png";
 
 const ChatBot = () => {
-  const [isVisible, setIsVisible] = useState(false); // controla a montagem do chat
-  const [isOpen, setIsOpen] = useState(false); // controla animação
+  const [isVisible, setIsVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState("welcome");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: `Olá! 👋 Sou o BrAIn, o assistente inteligente da Clou Business.\nPosso te ajudar com:\n1️⃣ Conhecer nossos serviços\n2️⃣ Agendar uma mentoria gratuita\n3️⃣ Falar com um consultor\n4️⃣ Suporte técnico ou dúvidas\n\nDigite o número da opção ou escreva sua pergunta 💬`,
+      text:
+        "Olá, seja bem-vindo(a) à Clou Business, sua parceira estratégica em marketing digital!\n\nComo podemos ajudar você hoje?\n\n1️⃣ Quero melhorar o marketing da minha empresa\n2️⃣ Desejo saber mais sobre a inteligência artificial\n3️⃣ Preciso de um site profissional\n4️⃣ Falar com um especialista\n5️⃣ Agendar uma consultoria gratuita",
     },
   ]);
 
-  // Função para abrir com animação suave
   const openChat = () => {
     setIsVisible(true);
-    setTimeout(() => setIsOpen(true), 10); // atraso para iniciar transição
+    setTimeout(() => setIsOpen(true), 10);
   };
 
-  // Função para fechar suavemente
   const closeChat = () => {
     setIsOpen(false);
-    setTimeout(() => setIsVisible(false), 300); // espera a animação antes de desmontar
+    setTimeout(() => setIsVisible(false), 300);
   };
 
   const handleSend = () => {
     if (!input.trim()) return;
     const userMessage = { from: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
-    processInput(input.trim());
+    processInput(input.trim().toLowerCase());
     setInput("");
   };
 
   const processInput = (input) => {
-    const lower = input.toLowerCase();
+    const contains = (keywords) => keywords.some((kw) => input.includes(kw));
+
+    // Palavras-chave universais
+    if (contains(["preço", "valores", "planos"])) {
+      sendBotMessage(
+        "Nossos serviços são personalizados, mas temos planos a partir de:\n• Gestão de redes: 150.000 Kz/mês\n• Sites: 550.000 Kz\n• BrAIn IA: desde 1.200.000 Kz (licença + setup)\n\nDeseja receber um orçamento?"
+      );
+      return;
+    }
+
+    if (contains(["portfólio", "exemplos", "cases"])) {
+      sendBotMessage("Veja alguns dos nossos trabalhos: [🔗 Link do portfólio]");
+      return;
+    }
+
+    if (contains(["humano", "atendimento", "consultor"])) {
+      sendBotMessage(
+        "👤 Sem problemas! Estamos te transferindo para um atendente humano."
+      );
+      return;
+    }
 
     switch (step) {
       case "welcome":
-        if (["1", "serviços", "servico", "conhecer"].includes(lower)) {
+        if (input === "1") {
           sendBotMessage(
-            `Nós ajudamos empresas a crescer com estratégias inteligentes e soluções digitais completas.\nOferecemos:\n• Gestão de Redes Sociais\n• Tráfego Pago (Google, Meta)\n• Desenvolvimento de Website e Lojas Virtuais\n• Identidade Visual & Branding\n• IA & Automação (Projeto BrAIn)\n\nDeseja saber mais sobre algum serviço específico?\nDigite o nome ou número da opção.`
+            "Ótimo! Nós ajudamos empresas como a sua com:\n• Gestão de redes sociais\n• Tráfego pago (Facebook e Google Ads)\n• Identidade visual e branding\n\nDeseja:\n1️⃣ Conversar com consultor\n2️⃣ Receber orçamento rápido"
           );
-          setStep("servicos");
-        } else if (["2", "mentoria"].includes(lower)) {
+          setStep("marketing");
+        } else if (input === "2") {
           sendBotMessage(
-            `✨ Que bom! A mentoria gratuita é um benefício exclusivo para quem deseja clareza estratégica antes de investir no digital.\n\n💡 Para agendar sua sessão, preciso de algumas informações rápidas:\n- Qual é o seu nome completo?\n- E-mail corporativo:\n- WhatsApp:\n- Nome da empresa:\n- Qual seu maior desafio hoje?\n- Deseja agendar para esta semana ou próxima?\n\nAssim que concluir, nossa equipe enviará o link de confirmação no seu WhatsApp ou email. 📱`
+            "Perfeito! Desenvolvemos o BrAIn, nossa IA que:\n• Atende clientes 24h/dia\n• Gera relatórios inteligentes\n• Organiza leads e vendas\n\nQuer:\n1️⃣ Testar gratuitamente por 30 dias\n2️⃣ Saber mais sobre o sistema"
           );
-          setStep("mentoria");
-        } else if (["3", "consultor"].includes(lower)) {
+          setStep("ia");
+        } else if (input === "3") {
           sendBotMessage(
-            `🤝 Sem problema! Um dos nossos especialistas vai te atender em instantes.\nEnquanto isso, você gostaria de adiantar alguma informação?\n- Nome\n- Empresa\n- Serviço de interesse\n\n⚡ Se for urgente, clique aqui para atendimento imediato via WhatsApp:\n[Falar com consultor agora: wa.me/244976196461]`
+            "Excelente! Criamos sites modernos e otimizados:\n\nQual tipo de site você precisa?\n1️⃣ Loja online\n2️⃣ Site institucional\n3️⃣ Página de vendas"
           );
-          setStep("consultor");
-        } else if (["4", "suporte"].includes(lower)) {
+          setStep("site");
+        } else if (input === "4") {
           sendBotMessage(
-            `🛠️ Você precisa de ajuda com algum serviço ativo?\n1️⃣ Acesso à área do cliente\n2️⃣ Status de projeto\n3️⃣ Relatórios ou entregas\n4️⃣ Outro\n\nDigite a opção ou escreva sua dúvida e eu tentarei te ajudar ou encaminhar ao responsável.\n\n© 2025 Clou Business – Todos os direitos reservados`
+            "Claro! Por favor, informe:\n1. Seu nome\n2. Nome da empresa\n3. Qual o serviço desejado?"
           );
-          setStep("suporte");
+          setStep("especialista");
+        } else if (input === "5") {
+          sendBotMessage(
+            "Perfeito! Nossa consultoria gratuita dura 20 minutos via Zoom ou WhatsApp.\nEscolha o melhor dia e horário: [📅 Link Calendly ou formulário]"
+          );
+          setStep("consultoria");
         } else {
           fallback();
         }
         break;
-
+      case "marketing":
+        if (input === "1") {
+          sendBotMessage("✅ Encaminhando você para um consultor especializado...");
+        } else if (input === "2") {
+          sendBotMessage("Vamos iniciar um orçamento!\nQual o ramo da sua empresa?\nTem redes sociais ativas?\nQual seu objetivo com o marketing?");
+        } else {
+          fallback();
+        }
+        break;
+      case "ia":
+        if (input === "1") {
+          sendBotMessage("Por favor, informe:\n• Nome completo\n• E-mail\n• WhatsApp\n• Nome da empresa");
+        } else if (input === "2") {
+          sendBotMessage("Nossa IA integra CRM, funis e automações personalizadas. Quer marcar uma demo?");
+        } else {
+          fallback();
+        }
+        break;
+      case "site":
+        if (["1", "2", "3"].includes(input)) {
+          sendBotMessage("Temos planos a partir de 550.000 Kz.\nDeseja:\n1️⃣ Ver portfólio\n2️⃣ Falar com consultor");
+          setStep("siteOrcamento");
+        } else {
+          fallback();
+        }
+        break;
+      case "siteOrcamento":
+        if (input === "1") {
+          sendBotMessage("🔗 Acesse nosso portfólio aqui: [link]");
+        } else if (input === "2") {
+          sendBotMessage("👤 Encaminhando você para um consultor especializado em sites...");
+        } else {
+          fallback();
+        }
+        break;
       default:
         fallback();
         break;
@@ -71,7 +129,7 @@ const ChatBot = () => {
 
   const fallback = () => {
     sendBotMessage(
-      `Desculpa, ainda estou aprendendo a lidar com esse tipo de pergunta.\nMas posso te ajudar com:\n1️⃣ Conhecer serviços\n2️⃣ Agendar mentoria\n3️⃣ Falar com consultor\n4️⃣ Suporte técnico\n\nOu, se preferir, fale direto com nossa equipe aqui:\n[WhatsApp: wa.me/244976196461]`
+      "Desculpe, ainda estou aprendendo a lidar com esse tipo de pergunta.\nVocê pode tentar:\n1️⃣ Marketing\n2️⃣ IA\n3️⃣ Sites\n4️⃣ Falar com especialista\n5️⃣ Consultoria gratuita"
     );
     setStep("welcome");
   };
@@ -82,7 +140,6 @@ const ChatBot = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Ícone de ativar o chat */}
       {!isVisible && (
         <img
           src={iconechat}
@@ -92,14 +149,12 @@ const ChatBot = () => {
         />
       )}
 
-      {/* Chatbox com transição suave */}
       {isVisible && (
         <div
           className={`w-[350px] bg-white rounded-[20px] shadow-lg border border-gray-200 overflow-hidden
           transform transition-all duration-300 ease-in-out
           ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
         >
-          {/* Header */}
           <div className="bg-gradient-to-r from-[#FF7700] to-white text-white flex items-center p-3 gap-2">
             <img src={iconechat} alt="Ícone" className="w-10 h-10" />
             <span className="font-bold">BrAIn-</span>
@@ -112,7 +167,6 @@ const ChatBot = () => {
             </button>
           </div>
 
-          {/* Mensagens */}
           <div className="p-4 text-sm space-y-5 max-h-[400px] overflow-y-auto">
             {messages.map((msg, i) => (
               <div
@@ -128,7 +182,6 @@ const ChatBot = () => {
             ))}
           </div>
 
-          {/* Input */}
           <div className="p-3 border-t flex items-center gap-2">
             <input
               type="text"

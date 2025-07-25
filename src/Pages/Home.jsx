@@ -478,15 +478,15 @@ const Home = () => {
                 </div>
               </section>
               <footer className="bg-[#FF7700]">
-                <div className="flex gap-10 items-center">
-                  <div className="py-10 pl-10">
+                <div className="flex items-center">
+                  <div className="p-5">
                   <img
                     src={logotipo}
                     alt=""
                     className="w-[150px] h-[150px] bg-white rounded-[50px]"
                   />
                 </div>
-                <div className="flex justify-center w-full gap-100">
+                <div className="flex w-full gap-100">
                   <div className=" w-[300px] h-[300px]">
                   <p className="text-[20px] font-bold leading-[100%] text-[#FFFFFF] py-20">
                     Clou Business - Prestação de Serviços, Lda <br />
@@ -501,10 +501,10 @@ const Home = () => {
                     Navegação rápida
                   </p>
                   <ul className="list-disc pl-5 text-[#FFFFFF] ">
-                    <li className="hover:text-black"><a href="#">Sobre nós</a></li>
-                    <li className="hover:text-black"><a href=""></a>Serviços</li>
-                    <li className="hover:text-black"><a href=""></a>Mentoria Gratuita</li>
-                    <li className="hover:text-black"><a href=""></a>Fale Conosco(ChatBot)</li>
+                    <li className="hover:text-black cursor-pointer pt-2"><a href="#">Sobre nós</a></li>
+                    <li className="hover:text-black cursor-pointer"><a href=""></a>Serviços</li>
+                    <li className="hover:text-black cursor-pointer"><a href=""></a>Mentoria Gratuita</li>
+                    <li className="hover:text-black cursor-pointer"><a href=""></a>Fale Conosco(ChatBot)</li>
                   </ul>
                 </div>
                 </div>
